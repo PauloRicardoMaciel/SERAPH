@@ -1,4 +1,4 @@
-import webbrowser
+'''import webbrowser
 from urllib.parse import quote
 import time 
 import os
@@ -36,4 +36,4 @@ class WhatsappBot:
 
 if __name__ == "__main__":
     bot = WhatsappBot()
-    bot.conectar()
+    bot.conectar()'''
