@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7j_l&%_@h6#@@=zlw)q@n@&1ti($jkslg^ng#$lvw*_%@wcwz&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["55b0-2804-30c-1f20-7500-f9f7-1cb8-77af-15dd.ngrok-free.app"]
+ALLOWED_HOSTS = ["seraph.app.br", "localhost"]
 
 
 # Application definition
@@ -115,7 +115,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'seraph.app.br'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

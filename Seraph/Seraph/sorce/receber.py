@@ -1,8 +1,37 @@
 import logging
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from Seraph import settings as current_app
-
+from Seraph.sorce.processos import is_valid_whatsapp_message, processar_whatsapp_message
 # from app.services.openai_service import generate_response
+AMOSTRA = '''{
+        "field": "messages",
+        "value": {
+        "messaging_product": "whatsapp",
+        "metadata": {
+        "display_phone_number": "16505551111",
+        "phone_number_id": "123456123"
+        }   ,
+        "contacts": [
+        {
+        "profile": {
+          "name": "test user name"
+        },
+        "wa_id": "16315551181"
+        }
+        ],
+        "messages": [
+        {
+        "from": "16315551181",
+        "id": "ABGGFlA5Fpa",
+        "timestamp": "1504902988",
+        "type": "text",
+        "text": {
+          "body": "this is a text message"
+        }
+        }
+        ]
+        }
+        }'''
 
 def lidar_message(request):
     """
@@ -18,55 +47,26 @@ def lidar_message(request):
     Retorna:
         resposta: uma tupla contendo uma resposta JSON e um código de status HTTP.
     """
-    body = request.GET
+    body = request.body
     # logging.info(f"request body: {body}")
-
-    # Check if it's a WhatsApp status update
-    if (
-        body.get("entry", [{}])[0]
-        .get("changes", [{}])[0]
-        .get("value", {})
-        .get("statuses")
-    ):
-        logging.info("Received a WhatsApp status update.")
-        # return jsonify({"status": "ok"}), 200
-
-    try:
-        if is_valid_whatsapp_message(body):
-            process_whatsapp_message(body)
-            # return jsonify({"status": "ok"}), 200
-        else:
-            # if the request is not a WhatsApp API event, return an error
-            return (
-                jsonify({"status": "error", "message": "Not a WhatsApp API event"}),
-                404,
-            )
-    except json.JSONDecodeError:
-        logging.error("Failed to decode JSON")
-       # return jsonify({"status": "error", "message": "Invalid JSON provided"}), 400
-
-
-# Required webhook verifictaion for WhatsApp
-def verify(request):
-    # Parse params from the webhook verification request
-    mode = request.GET("hub.mode")
-    token = request.GET("hub.verify_token")
-    challenge = request.GET("hub.challenge")
-    # Check if a token and mode were sent
-    if mode and token:
-        # Check the mode and token sent are correct
-        if mode == "subscribe" and token == current_app.config["VERIFY_TOKEN"]:
-            # Respond with 200 OK and challenge token from the request
-            logging.info("WEBHOOK_VERIFIED")
-            return challenge, 200
-        else:
-            # Responds with '403 Forbidden' if verify tokens do not match
-            logging.info("VERIFICATION_FAILED")
-            # return jsonify({"status": "error", "message": "Verification failed"}), 403
+    body = body.decode("utf-8")
+    dados = body.split(":")
+    
+    # Verifique se é uma atualização de status do WhatsApp
+    # verifica se a mensagem é valida e processa a mesma 
+    if is_valid_whatsapp_message(body,AMOSTRA.split(":")):
+        processar_whatsapp_message(body)
     else:
-        # Responds with '400 Bad Request' if verify tokens do not match
-        logging.info("MISSING_PARAMETER")
-        # return jsonify({"status": "error", "message": "Missing parameters"}), 400
+        # Se a request não é um WhatsApp API event, return erro
+        return (
+            HttpResponse("404")
+        )
+
+# Requerimento de Verificação webhook para WhatsApp
+def verify(request):
+    
+    recebido = request.GET
+    return HttpResponse(recebido["hub.challenge"])
 
 
 

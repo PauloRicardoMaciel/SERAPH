@@ -19,8 +19,10 @@ from django.urls import path
 from Seraph import view
 from Seraph.sorce import receber, botApp, mensagens
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("Tests/", view.testarEntrada),
-    path("receber/", receber.verificarMethod)
+    path('receber/', receber.verificarMethod),
+    path('politicas/', view.testarEntrada),
+    path('termosdeservico',view.testarEntrada)
 ]
