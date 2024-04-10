@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Seraph import view
+from Seraph.sorce import receber, botApp, mensagens
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('receber/', receber.verificarMethod),
+    path('politicas/', view.testarEntrada),
+    path('termosdeservico',view.testarEntrada)
 ]

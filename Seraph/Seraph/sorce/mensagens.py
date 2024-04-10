@@ -1,8 +1,7 @@
 import json
 import os 
-import requests
-import aiohttp
-import asyncio
+from django.http import HttpRequest
+
 
 #fist test 
 def enviar_mensagem():
@@ -20,9 +19,9 @@ def enviar_mensagem():
     response = requests.post(url, headers=headers, json=data)
     return response
 
-response = send_whatsapp_message()
-print(response.status_code)
-print(response.json())
+#response = send_whatsapp_message()
+#print(response.status_code)
+#print(response.json())
 
 #enviar mensagens para os numero indicados podendo caso receba enviar respostas
 def enviar_mensagem(data):
@@ -45,3 +44,4 @@ def enviar_mensagem(data):
         return response
 #prepara a mensagem a ser enviada
 def get_text_menssage_input():
+    pass

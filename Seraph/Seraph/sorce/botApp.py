@@ -3,14 +3,10 @@ from urllib.parse import quote
 import time 
 import os
 import pyautogui
-from selenium import webdriver
 
 class WhatsappBot:
     def __init__(self):
         self.mensagem = "Olá Mundo Sou Seraph"
-        server = webdriver.ChromeService("./chromedriver.exe")
-        options = webdriver.ChromeOptions
-        self.drive = webdriver.Chrome(options, server)
         
     def enviarMensagens(self):
         telefone = 5547999282154
