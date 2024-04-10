@@ -23,6 +23,7 @@ from Seraph.sorce import receber, botApp, mensagens
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('receber/', receber.verificarMethod),
-    path('politicas/', view.testarEntrada),
-    path('termosdeservico',view.testarEntrada)
+    path('politicas/', view.visaoPolitica),
+    path('termosdeservico/',view.visaoTermo),
+    path('teste/', view.testarEntrada)
 ]
