@@ -1,4 +1,4 @@
-#!/usr/bin/scl enable python27 -- /home/CONTA/.virtualenv/bin/python
+#!/usr/bin/scl enable python27 -- /home/seraph84/.virtualenv/bin/python
  
 import os, sys
  
